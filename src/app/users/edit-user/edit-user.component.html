@@ -1,0 +1,41 @@
+<div class="row mt-5">
+  <form [formGroup]="editDataForm" (ngSubmit)="editUser()">
+    <div class="d-flex text-center">
+      <div class="col-6">
+        <h1 class="text-bold text-warning">NAME</h1>
+        <input
+          class="form-control w-50 d-inline-block"
+          type="text"
+          placeholder="Enter Name (eg. Max)"
+          formControlName="editName"
+        />
+      </div>
+
+      <div class="col-6">
+        <h1 class="text-bold text-warning">MONEY</h1>
+        <input
+          class="form-control w-50 d-inline-block"
+          type="number"
+          placeholder="Enter Amount (eg. 10)"
+          formControlName="editMoney"
+        /><span class="text-bold fs-5 text-success"> $</span>
+      </div>
+    </div>
+
+    <div class="row text-center mt-5">
+      <div class="col-12">
+        <button
+          (click)="onUpdate()"
+          type="button"
+          [disabled]="!editDataForm.valid"
+          class="btn btn-warning w-25 text-success fs-4 fw-bold"
+        >
+          UPDATE
+        </button>
+        <p *ngIf="!editDataForm.valid">
+          <small class="text-danger">*Please enter Name and Money</small>
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

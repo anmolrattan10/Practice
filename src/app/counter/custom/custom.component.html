@@ -1,0 +1,15 @@
+<div class="row text-center">
+  <div class="col-md-12">
+    <form [formGroup]="customCounterForm">
+      <input
+        formControlName="customCounterInput"
+        type="number"
+        class="form-control-lg me-2 border-2 border-warning"
+        placeholder="Enter Value"
+      />
+      <button (click)="onAdd()" class="btn btn-lg mb-2 fw-medium btn-warning">
+        <span class="text-bold">+</span> By
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<router-outlet></router-outlet>
+
+<div class="row mt-5" *ngIf="!isEditing">
+  <form [formGroup]="dataForm" (ngSubmit)="addUser()">
+    <div class="d-flex text-center">
+      <div class="col-6">
+        <h1 class="text-bold text-warning">NAME</h1>
+        <input
+          class="form-control w-50 d-inline-block"
+          type="text"
+          placeholder="Enter Name (eg. Max)"
+          formControlName="name"
+        />
+      </div>
+
+      <div class="col-6">
+        <h1 class="text-bold text-warning">MONEY</h1>
+        <input
+          class="form-control w-50 d-inline-block"
+          type="number"
+          placeholder="Enter Amount (eg. 10)"
+          formControlName="money"
+        /><span class="text-bold fs-5 text-success"> $</span>
+      </div>
+    </div>
+
+    <div class="row text-center mt-5">
+      <div class="col-12">
+        <button
+          type="submit"
+          [disabled]="!dataForm.valid"
+          class="btn btn-warning w-25 text-success fs-4 fw-bold"
+          *ngIf="!isEditing"
+        >
+          ADD
+        </button>
+        <button
+          (click)="onUpdate()"
+          type="button"
+          [disabled]="!dataForm.valid"
+          class="btn btn-warning w-25 text-success fs-4 fw-bold"
+          *ngIf="isEditing"
+        >
+          UPDATE
+        </button>
+        <p *ngIf="!dataForm.valid">
+          <small class="text-danger">*Please enter Name and Money</small>
+        </p>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="row mt-5 text-center">
+  <div class="col-xs-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Money</th>
+          <th scope="col">Action</th>
+          <th scope="col">EDIT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users | async; let i = index">
+          <td class="fw-bold">{{ user.userId }}.</td>
+          <td class="text-capitalize">{{ user.userName }}</td>
+          <td>
+            {{ user.userMoney }}
+          </td>
+          <td>
+            <button
+              type="button"
+              (click)="sendMoney(i)"
+              class="btn btn-success"
+            >
+              Add <strong>5$</strong> to
+              <span class="text-capitalize">{{ user.userName }}</span>
+            </button>
+            <button
+              type="button"
+              (click)="getMoney()"
+              class="btn btn-danger ms-2"
+            >
+              Get <strong>10$</strong> from
+              <span class="text-capitalize">{{ user.userName }}</span>
+            </button>
+          </td>
+          <td>
+            <a
+              [routerLink]="['edit', user.userId]"
+              class="btn btn-primary"
+              (click)="onEdit(i)"
+            >
+              Edit
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
