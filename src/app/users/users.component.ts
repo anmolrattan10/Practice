@@ -1,12 +1,18 @@
-import { Observable, Subscription, map } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { USER } from './models/users.model';
 import { AppState } from '../store/app.state';
 import { getUsers } from './store/users.selectors';
-import { addUser, sendMoney } from './store/users.actions';
+import {
+  addUser,
+  deleteUser,
+  getMoney,
+  sendMoney,
+} from './store/users.actions';
+import { EditUserService } from './services/edit-user.service';
 
 @Component({
   selector: 'app-users',
@@ -14,19 +20,34 @@ import { addUser, sendMoney } from './store/users.actions';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit, OnDestroy {
-  isEditing: boolean = false;
   dataForm!: FormGroup;
   users!: Observable<USER[]>;
   usersSubscription!: Subscription;
+  showAddForm = new BehaviorSubject<boolean>(true);
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private editUserService: EditUserService
+  ) {}
 
   ngOnInit(): void {
+    this.createAddUserForm();
+    this.getUsers();
+    this.showAddUserForm();
+  }
+
+  createAddUserForm() {
     this.dataForm = new FormGroup({
       name: new FormControl(null, Validators.required),
       money: new FormControl(null, Validators.required),
     });
+  }
 
+  showAddUserForm() {
+    this.showAddForm.next(true);
+  }
+
+  getUsers() {
     this.users = this.store.select(getUsers);
   }
 
@@ -39,32 +60,39 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.dataForm.reset();
   }
 
-  onEdit(i: number) {
-    this.isEditing = true;
+  onEdit(index: number) {
+    this.editUserService.showEditForm(true);
 
-    // this.usersSubscription = this.users.subscribe((data) => {
-    //   this.dataForm.setValue({
-    //     name: data[i].userName,
-    //     money: data[i].userMoney,
-    //   });
-    // });
+    this.editUserService.isEditingSubject.subscribe((data) => {
+      this.showAddForm.next(!data);
+    });
   }
 
-  onUpdate() {}
-
-  sendMoney(i: number) {
-    let user!: any;
+  sendMoney(index: number) {
+    let user!: USER;
     this.usersSubscription = this.users.subscribe((data) => {
-      user = data[i];
+      user = data[index];
     });
     this.store.dispatch(sendMoney({ user }));
   }
 
-  getMoney() {
-    // this.users[i].money = +userMoney - 10;
+  getMoney(index: number) {
+    let user!: USER;
+    this.users.subscribe((data) => {
+      user = data[index];
+    });
+    this.store.dispatch(getMoney({ user }));
+  }
+
+  onDelete(userId: number | undefined) {
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.store.dispatch(deleteUser({ userId }));
+    }
   }
 
   ngOnDestroy(): void {
-    // this.usersSubscription.unsubscribe();
+    if (this.usersSubscription) {
+      this.usersSubscription.unsubscribe();
+    }
   }
 }

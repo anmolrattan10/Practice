@@ -1,6 +1,12 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
-import { addUser, editUser, sendMoney } from './users.actions';
+import {
+  addUser,
+  deleteUser,
+  editUser,
+  getMoney,
+  sendMoney,
+} from './users.actions';
 import { UsersState, initialState } from './users.state';
 
 const _usersReducer = createReducer(
@@ -28,16 +34,37 @@ const _usersReducer = createReducer(
       users: updatedUser,
     };
   }),
-  on(editUser, (state, action) => {
-    let updatedUser = state.users.map((user) => {
+  on(getMoney, (state, action) => {
+    const updatedUser = state.users.map((user) => {
       return action.user.userId === user.userId
         ? (user = {
             userId: user.userId,
             userName: user.userName,
-            userMoney: user.userMoney,
+            userMoney: user.userMoney - 10,
           })
         : user;
     });
+    return {
+      ...state,
+      users: updatedUser,
+    };
+  }),
+
+  on(editUser, (state, action) => {
+    const updatedUser = state.users.map((user) => {
+      return action.user.userId === user.userId ? action.user : user;
+    });
+
+    return {
+      ...state,
+      users: updatedUser,
+    };
+  }),
+  on(deleteUser, (state, { userId }) => {
+    const updatedUser = state.users.filter((user) => {
+      return user.userId !== userId;
+    });
+
     return {
       ...state,
       users: updatedUser,

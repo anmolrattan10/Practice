@@ -8,9 +8,10 @@ export const getUsers = createSelector(getUserState, (state) => {
   return state.users;
 });
 
-export const getUserById = createSelector(
-  getUserState,
-  (state: any, props: any) => {
-    return state.users.find((user: any) => user.userId === props.userId);
-  }
-);
+export const getUserById = (userId: number) =>
+  createSelector(getUserState, (state) => {
+    let editedUser = state.users.find((user) => {
+      return user.userId == userId;
+    });
+    return editedUser;
+  });

@@ -16,12 +16,24 @@ export class CustomComponent implements OnInit {
   constructor(private store: Store<{ counter: COUNTER }>) {}
 
   ngOnInit(): void {
+    this.createCustomCounterForm();
+  }
+
+  /**
+   * @function to create custom counter input form.
+   * @returns void.
+   */
+  createCustomCounterForm(): void {
     this.customCounterForm = new FormGroup({
       customCounterInput: new FormControl(null),
     });
   }
 
-  onAdd() {
+  /**
+   * @function to increase counter by custom input.
+   * @returns void.
+   */
+  onAdd(): void {
     this.store.dispatch(
       CUSTOM_INCREMENT_ACTION({
         count: this.customCounterForm.value.customCounterInput,

@@ -1,6 +1,6 @@
 <router-outlet></router-outlet>
 
-<div class="row mt-5" *ngIf="!isEditing">
+<div class="row mt-5" *ngIf="showAddForm | async">
   <form [formGroup]="dataForm" (ngSubmit)="addUser()">
     <div class="d-flex text-center">
       <div class="col-6">
@@ -30,18 +30,8 @@
           type="submit"
           [disabled]="!dataForm.valid"
           class="btn btn-warning w-25 text-success fs-4 fw-bold"
-          *ngIf="!isEditing"
         >
           ADD
-        </button>
-        <button
-          (click)="onUpdate()"
-          type="button"
-          [disabled]="!dataForm.valid"
-          class="btn btn-warning w-25 text-success fs-4 fw-bold"
-          *ngIf="isEditing"
-        >
-          UPDATE
         </button>
         <p *ngIf="!dataForm.valid">
           <small class="text-danger">*Please enter Name and Money</small>
@@ -59,8 +49,9 @@
           <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Money</th>
-          <th scope="col">Action</th>
+          <th scope="col">Actions</th>
           <th scope="col">EDIT</th>
+          <th scope="col">DELETE</th>
         </tr>
       </thead>
       <tbody>
@@ -77,25 +68,35 @@
               class="btn btn-success"
             >
               Add <strong>5$</strong> to
-              <span class="text-capitalize">{{ user.userName }}</span>
+              <span class="text-capitalize"
+                ><strong>{{ user.userName }}</strong></span
+              >
             </button>
             <button
               type="button"
-              (click)="getMoney()"
-              class="btn btn-danger ms-2"
+              (click)="getMoney(i)"
+              class="btn btn-primary ms-2"
+              [disabled]="user.userMoney <= 5"
             >
               Get <strong>10$</strong> from
-              <span class="text-capitalize">{{ user.userName }}</span>
+              <span class="text-capitalize"
+                ><strong>{{ user.userName }}</strong></span
+              >
             </button>
           </td>
           <td>
             <a
               [routerLink]="['edit', user.userId]"
-              class="btn btn-primary"
+              class="btn btn-warning"
               (click)="onEdit(i)"
             >
               Edit
             </a>
+          </td>
+          <td>
+            <button class="btn btn-danger ms-2" (click)="onDelete(user.userId)">
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>

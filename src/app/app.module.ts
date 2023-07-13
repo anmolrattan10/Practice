@@ -12,11 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { UsersComponent } from './users/users.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
-import { CustomComponent } from './counter/custom/custom.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
-    CustomComponent,
     AppComponent,
     NavbarComponent,
     HomeComponent,
@@ -24,10 +23,11 @@ import { CustomComponent } from './counter/custom/custom.component';
     EditUserComponent,
   ],
   imports: [
-    FormsModule,
-    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    AngularFontAwesomeModule,
     NgbModule,
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),

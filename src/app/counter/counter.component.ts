@@ -20,7 +20,19 @@ export class CounterComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<AppState>) {}
 
+  /**
+   * @function that runs when the component is initialized.
+   * @returns void.
+   */
   ngOnInit(): void {
+    this.getCounterState();
+  }
+
+  /**
+   * @function to get counter state from store.
+   * @returns void.
+   */
+  getCounterState(): void {
     this.counterSubscription = this.store
       .select('counter')
       .subscribe((data) => {
@@ -28,18 +40,34 @@ export class CounterComponent implements OnInit, OnDestroy {
       });
   }
 
-  increment() {
+  /**
+   * @function to increment the counter by 1.
+   * @returns void.
+   */
+  increment(): void {
     this.store.dispatch(INCREMENT_ACTION());
   }
 
-  decrement() {
+  /**
+   * @function to decrement counter by 1.
+   * @returns void.
+   */
+  decrement(): void {
     this.store.dispatch(DECREMENT_ACTION());
   }
 
-  reset() {
+  /**
+   * @function to reset the counter.
+   * @returns void.
+   */
+  reset(): void {
     this.store.dispatch(RESET_ACTION());
   }
 
+  /**
+   * @function that runs when the component is destroyed.
+   * @returns void.
+   */
   ngOnDestroy(): void {
     if (this.counterSubscription) {
       this.counterSubscription.unsubscribe();
