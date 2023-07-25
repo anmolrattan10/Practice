@@ -8,6 +8,7 @@ import {
   RESET_ACTION,
 } from './store/counter.actions';
 import { AppState } from '../store/app.state';
+import { getCounter } from './store/counter.selectors';
 
 @Component({
   selector: 'app-counter',
@@ -34,9 +35,9 @@ export class CounterComponent implements OnInit, OnDestroy {
    */
   getCounterState(): void {
     this.counterSubscription = this.store
-      .select('counter')
+      .select(getCounter)
       .subscribe((data) => {
-        this.counter = data.counter;
+        this.counter = data;
       });
   }
 

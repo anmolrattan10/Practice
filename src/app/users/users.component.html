@@ -85,18 +85,22 @@
             </button>
           </td>
           <td>
-            <a
+            <!-- <a class="btn btn-warning"> -->
+            <i
               [routerLink]="['edit', user.userId]"
-              class="btn btn-warning"
               (click)="onEdit(i)"
-            >
-              Edit
-            </a>
+              class="fas fa-pen fs-4"
+              style="color: rgb(255, 196, 0)"
+            ></i>
+            <!-- </a> -->
           </td>
           <td>
-            <button class="btn btn-danger ms-2" (click)="onDelete(user.userId)">
-              Delete
-            </button>
+            <!-- <button class="btn btn-danger ms-2"> -->
+            <i
+              (click)="onDelete(user.userId)"
+              class="fas fa-trash text-danger fs-4 mt-1"
+            ></i>
+            <!-- </button> -->
           </td>
         </tr>
       </tbody>

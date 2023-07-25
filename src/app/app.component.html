@@ -1,3 +1,16 @@
 <app-navbar></app-navbar>
 
+<app-loading-spinner *ngIf="showLoading | async"></app-loading-spinner>
+
+<div class="row justify-content-center">
+  <div class="col-md-12">
+    <div
+      class="alert alert-danger mt-1 ms-2 me-2"
+      *ngIf="errorMessage | async as error"
+    >
+      {{ error }}
+    </div>
+  </div>
+</div>
+
 <router-outlet></router-outlet>

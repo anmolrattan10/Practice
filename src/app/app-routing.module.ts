@@ -15,8 +15,12 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    component: UsersComponent,
-    children: [{ path: 'edit/:userId', component: EditUserComponent }],
+    loadChildren: () =>
+      import('./users/users.module').then((m) => m.UsersModule),
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
 ];
 

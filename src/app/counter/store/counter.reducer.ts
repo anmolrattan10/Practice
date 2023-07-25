@@ -30,7 +30,6 @@ const _counterReducer = createReducer(
     };
   }),
   on(CUSTOM_INCREMENT_ACTION, (state, action) => {
-    console.log(action);
     return {
       ...state,
       counter: state.counter + action.count,

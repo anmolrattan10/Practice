@@ -1,0 +1,75 @@
+<div class="container-fluid mt-5">
+  <div class="row text-center mt-2">
+    <div class="col-md-12">
+      <h1 class="text-warning fw-bold">SIGN UP</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <form class="form-group" [formGroup]="signupForm" (ngSubmit)="onSignUp()">
+        <div class="row">
+          <div class="col justify-content-center d-flex">
+            <label class="text-warning fs-2 me-5">E-mail</label>
+            <input
+              type="email"
+              placeholder="abc@xyz.com"
+              class="form-control w-25 ms-4 border-secondary"
+              [class.border-danger]="
+                !signupForm.controls['email'].valid &&
+                signupForm.controls['email'].touched
+              "
+              formControlName="email"
+            />
+          </div>
+          <div
+            class="col-md-12 text-center"
+            *ngIf="
+              !signupForm.controls['email'].valid &&
+              signupForm.controls['email'].touched
+            "
+          >
+            <small class="text-danger">*Please enter a valid E-mail.</small>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col d-flex justify-content-center">
+            <label class="text-warning fs-2">Password</label>
+            <input
+              type="password"
+              placeholder="********"
+              class="form-control ms-4 w-25 border-secondary"
+              [class.border-danger]="
+                !signupForm.controls['password'].value &&
+                signupForm.controls['password'].touched
+              "
+              formControlName="password"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-8 text-center mt-5 d-flex flex-row-reverse">
+            <button
+              class="btn btn-warning w-25 fw-medium"
+              type="submit"
+              [disabled]="!signupForm.valid"
+            >
+              Sign up
+            </button>
+          </div>
+
+          <div
+            class="col-8 text-center d-flex flex-row-reverse"
+            *ngIf="!signupForm.valid && signupForm.touched"
+          >
+            <small class="text-danger">*Please enter E-mail & Password.</small>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
