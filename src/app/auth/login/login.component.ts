@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  EmailValidator,
-  FormControl,
-  FormControlName,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/store/app.state';
+
+import { AppState } from '../../store/app.state';
 import { loginStart } from '../store/auth.actions';
-import { setLoadingSpinner } from 'src/app/store/shared/shared.actions';
+import { setLoadingSpinner } from '../../store/shared/shared.actions';
 
 @Component({
   selector: 'app-login',

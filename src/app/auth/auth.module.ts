@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AuthEffects } from './store/auth.effects';
 import { LoginComponent } from './login/login.component';
 import { SingUpComponent } from './sing-up/sing-up.component';
 
@@ -25,7 +24,7 @@ const routes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    EffectsModule.forFeature([AuthEffects]),
+    EffectsModule.forFeature(),
   ],
   declarations: [LoginComponent, SingUpComponent],
 })

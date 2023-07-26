@@ -2,9 +2,12 @@ import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import {
+  setErrorMessage,
+  setLoadingSpinner,
+} from '../../store/shared/shared.actions';
 import { AppState } from '../../store/app.state';
 import { signupStart } from '../store/auth.actions';
-import { setLoadingSpinner } from '../../store/shared/shared.actions';
 
 @Component({
   selector: 'app-sing-up',
@@ -18,6 +21,11 @@ export class SingUpComponent implements OnInit {
 
   ngOnInit(): void {
     this.createSignUpForm();
+    this.clearErrorMessage();
+  }
+
+  clearErrorMessage() {
+    this.store.dispatch(setErrorMessage({ message: '' }));
   }
 
   createSignUpForm() {

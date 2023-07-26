@@ -1,15 +1,19 @@
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { AuthResponseData } from '../models/AuthResponseData.model';
 import { User } from '../models/user.model';
+import { logout } from '../store/auth.actions';
+import { AuthResponseData } from '../models/AuthResponseData.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  timeoutInterval: string | number | NodeJS.Timeout | null | undefined;
+
+  constructor(private http: HttpClient, private store: Store) {}
 
   login(email: string, password: string): Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(
@@ -48,6 +52,48 @@ export class AuthService {
         return 'Email already exists.';
       default:
         return 'Unknown Error Occurred! Please try again.';
+    }
+  }
+  setUserInLocalStorage(user: User) {
+    localStorage.setItem('userData', JSON.stringify(user));
+    this.runTimeoutInterval(user);
+  }
+
+  runTimeoutInterval(user: User) {
+    const todaysDate = new Date().getTime();
+    const expirationDate = user.expireDate.getTime();
+    const timeInterval = expirationDate - todaysDate;
+
+    this.timeoutInterval = setTimeout(() => {
+      this.store.dispatch(logout());
+    }, timeInterval);
+  }
+
+  getUserFromLocalStorage() {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      const expirationDate = new Date(userData.expirationDate);
+
+      const user = new User(
+        userData.email,
+        userData.token,
+        userData.localId,
+        expirationDate
+      );
+
+      this.runTimeoutInterval(user);
+      return user;
+    }
+    return null;
+  }
+
+  logout() {
+    localStorage.removeItem('userData');
+
+    if (this.timeoutInterval) {
+      clearTimeout(this.timeoutInterval);
+      this.timeoutInterval = null;
     }
   }
 }

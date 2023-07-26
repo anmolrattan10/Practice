@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AppState } from '../../store/app.state';
 import { isAuthenticated } from '../../auth/store/auth.selectors';
+import { logout } from 'src/app/auth/store/auth.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -17,5 +18,11 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAuthenticated = this.store.select(isAuthenticated);
+  }
+
+  onLogout(event: Event) {
+    event.preventDefault();
+
+    this.store.dispatch(logout());
   }
 }

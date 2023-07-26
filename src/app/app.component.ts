@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 
 import { AppState } from './store/app.state';
+import { autoLogin } from './auth/store/auth.actions';
 import { getErrorMessage, getLoading } from './store/shared/shared.selector';
 
 @Component({
@@ -17,7 +18,20 @@ export class AppComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
+    this.autoLogin();
+    this.showError();
+    this.showLoader();
+  }
+
+  autoLogin() {
+    this.store.dispatch(autoLogin());
+  }
+
+  showLoader() {
     this.showLoading = this.store.select(getLoading);
+  }
+
+  showError() {
     this.errorMessage = this.store.select(getErrorMessage);
   }
 }

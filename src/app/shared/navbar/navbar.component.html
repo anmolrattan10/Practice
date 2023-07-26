@@ -3,67 +3,45 @@
     <h1 class="me-5 text-bold text-light">ASSINGMENT</h1>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="isAuthenticated | async">
           <a
             class="nav-link text-light"
             [routerLink]="['/home']"
-            routerLinkActive="active activeLink"
+            routerLinkActive="active activeLink text-dark fw-bold"
             >Home</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link text-light"
-            [routerLink]="['/counter']"
-            routerLinkActive="active activeLink"
-            >COUNTER</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link text-light"
-            [routerLink]="['/users']"
-            routerLinkActive="active activeLink"
-            >USERS</a
-          >
-        </li>
-        <li class="nav-item" *ngIf="!(isAuthenticated | async)">
-          <a
-            class="nav-link text-light"
-            [routerLink]="['/auth/login']"
-            routerLinkActive="active activeLink"
-            >Login</a
-          >
-        </li>
-        <li class="nav-item" *ngIf="!(isAuthenticated | async)">
-          <a
-            class="nav-link text-light"
-            [routerLink]="['/auth/signup']"
-            routerLinkActive="active activeLink"
-            >Sign up</a
           >
         </li>
         <li class="nav-item" *ngIf="isAuthenticated | async">
           <a
             class="nav-link text-light"
-            [routerLink]="['/auth/Logout']"
-            routerLinkActive="active activeLink"
-            >Logout</a
+            [routerLink]="['/counter']"
+            routerLinkActive="active activeLink text-dark fw-bold"
+            >COUNTER</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="isAuthenticated | async">
+          <a
+            class="nav-link text-light"
+            [routerLink]="['/users']"
+            routerLinkActive="active activeLink text-dark fw-bold"
+            >USERS</a
           >
         </li>
       </ul>
     </div>
   </div>
-  <!-- <div style="margin-top: 30px" class="me-3">
+
+  <div style="margin-top: 30px" class="me-3">
     <div class="lh-1">
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAuthenticated | async">
         <a
-          class="nav-link text-warning"
-          [routerLink]="['/auth']"
-          routerLinkActive="active activeLink"
-          >Login</a
-        >
+          (click)="onLogout($event)"
+          class="nav-link text-danger me-2"
+          ngbTooltip="Logout"
+          [routerLink]="['/auth/Logout']"
+          ><i class="fas fa-power-off"></i
+        ></a>
       </li>
     </div>
-  </div> -->
+  </div>
 </nav>

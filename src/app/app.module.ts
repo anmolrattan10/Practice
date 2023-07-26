@@ -8,11 +8,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { appReducer } from './store/app.state';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthEffects } from './auth/store/auth.effects';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { appReducer } from './store/app.state';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { appReducer } from './store/app.state';
     FormsModule,
     NgbModule,
     HttpClientModule,
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
