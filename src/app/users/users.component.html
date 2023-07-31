@@ -65,7 +65,7 @@
             <button
               type="button"
               (click)="sendMoney(i)"
-              class="btn btn-success"
+              class="btn btn-success text-warning"
             >
               Add <strong>5$</strong> to
               <span class="text-capitalize"
@@ -75,7 +75,7 @@
             <button
               type="button"
               (click)="getMoney(i)"
-              class="btn btn-primary ms-2"
+              class="btn btn-primary ms-2 text-warning"
               [disabled]="user.userMoney <= 5"
             >
               Get <strong>10$</strong> from

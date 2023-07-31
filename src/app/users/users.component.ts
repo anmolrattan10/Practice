@@ -10,6 +10,7 @@ import {
   addUser,
   deleteUser,
   getMoney,
+  loadUsers,
   sendMoney,
 } from './store/users.actions';
 import { EditUserService } from './services/edit-user.service';
@@ -34,6 +35,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.createAddUserForm();
     this.getUsers();
     this.showAddUserForm();
+
+    this.store.dispatch(loadUsers());
   }
 
   createAddUserForm() {

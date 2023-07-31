@@ -5,8 +5,5 @@ export interface UsersState {
 }
 
 export const initialState: UsersState = {
-  users: [
-    { userId: 1, userName: 'abc', userMoney: 10 },
-    { userId: 2, userName: 'def', userMoney: 20 },
-  ],
+  users: [],
 };
